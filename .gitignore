@@ -1,0 +1,39 @@
+# Build and publish folders
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Rider IDE
+.idea/
+
+# Logs
+*.log
+
+# Secrets and local settings
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Environment files
+.env
+.env.*
+
+# EF Core migration snapshots (optional)
+Migrations/*Designer.cs
+Migrations/*Snapshot.cs
+
+# System files
+.DS_Store
+Thumbs.db
+
+.vs/
