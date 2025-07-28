@@ -28,10 +28,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-app.MapControllers();
-
 app.UseCors(policy =>
 policy
 .WithOrigins("http://localhost:5173")
@@ -39,6 +35,10 @@ policy
 .AllowAnyMethod()
 .AllowCredentials()
 );
+
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.MapHub<ChatHub>("/chathub");
 
