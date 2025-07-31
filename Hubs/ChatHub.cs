@@ -31,10 +31,12 @@ namespace ChatApp.Hubs
 
 			var newMessage = new Message
 			{
+				Id = Guid.NewGuid().ToString(),
 				UserId = dbUser.Id,
 				Content = message,
 				CreatedAt = DateTime.UtcNow,
-				IsDeleted = false
+				IsDeleted = false,
+				User = dbUser
 			};
 
 			_context.Messages.Add(newMessage);

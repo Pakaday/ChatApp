@@ -1,10 +1,16 @@
-﻿namespace ChatApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ChatApp.Models
 {
 	public class User
 	{
-		public int Id { get; set; }
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
+		public required string Id { get; set; }
 		public string Username { get; set; } = string.Empty;
-		public string PasswordHash { get; set; } = string.Empty;
+		public string? PasswordHash { get; set; }
 
+		public ICollection<Message> Messages { get; set; } = new List<Message>();
 	}
 }
