@@ -8,10 +8,11 @@ namespace ChatApp.Models
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public required string Id { get; set; }
+		[ForeignKey("User")]
 		public  required string UserId { get; set; }
 		public string Content { get; set; } = string.Empty;
 		public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 		public bool IsDeleted { get; set; } = false;
-		public User User { get; set; } = null!; // Navigation property to User
+		public required User User { get; set; }
 	}
 }

@@ -19,7 +19,7 @@ namespace ChatApp.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CreateUser([FromBody] User user)
 		{
-			Console.WriteLine($"[UsersController] POST received: {user.Id}, {user.Username}");
+			Console.WriteLine($"[UsersController] POST received: {user.Id}, {user.Email}");
 
 			var exists = await _context.Users.AnyAsync(u => u.Id == user.Id);
 			if (exists)
@@ -30,7 +30,7 @@ namespace ChatApp.Controllers
 
 			_context.Users.Add(user);
 			await _context.SaveChangesAsync();
-			Console.WriteLine($"[UsersController] New user created: {user.Username}");
+			Console.WriteLine($"[UsersController] New user created: {user.Email}");
 			return Ok();
 		}
 	}

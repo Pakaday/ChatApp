@@ -26,7 +26,7 @@ namespace ChatApp.Controllers
 
 			var result = messages.Select(m => new
 			{
-				user = m.User.Username,
+				user = m.User.DisplayName ?? m.User.Email,
 				message = m.Content,
 				createdAt = m.CreatedAt
 			});

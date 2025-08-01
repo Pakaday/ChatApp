@@ -22,7 +22,7 @@ namespace ChatApp.Hubs
 				return;
 			}
 
-			var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == user);
+			var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user);
 			if (dbUser == null)
 			{
 				Console.WriteLine($"[ChatHub] No user found in DB with username: {user}");
