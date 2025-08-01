@@ -28,6 +28,11 @@ namespace ChatApp.Controllers
 				return Ok();
 			}
 
+			if (string.IsNullOrEmpty(user.DisplayName))
+			{
+				user.DisplayName = user.Email;
+			}
+
 			_context.Users.Add(user);
 			await _context.SaveChangesAsync();
 			Console.WriteLine($"[UsersController] New user created: {user.Email}");
