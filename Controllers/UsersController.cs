@@ -38,5 +38,11 @@ namespace ChatApp.Controllers
 			Console.WriteLine($"[UsersController] New user created: {user.Email}");
 			return Ok();
 		}
+
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+		{
+			return await _context.Users.ToListAsync();
+		}
 	}
 }
