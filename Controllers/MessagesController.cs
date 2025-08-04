@@ -16,17 +16,20 @@ namespace ChatApp.Controllers
 			_context = context;
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> GetMessages()
+		[HttpGet("{userId}")]
+		public async Task<IActionResult> GetMessages(string userId)
 		{
 			var messages = await _context.Messages
-				.Include(m => m.User)
+				.Include(m => m.Sender)
+				.Include(m => m.Recipient)
+				.Where(m => m.UserId == userId || m.RecipientId == userId)
 				.OrderBy(m => m.CreatedAt)
 				.ToListAsync();
 
 			var result = messages.Select(m => new
 			{
-				user = m.User.DisplayName ?? m.User.Email,
+				from = m.Sender.DisplayName ?? m.Sender.Email,
+				to = m.Recipient.DisplayName ?? m.Recipient.Email,
 				message = m.Content,
 				createdAt = m.CreatedAt
 			});

@@ -14,36 +14,39 @@ namespace ChatApp.Hubs
 		{
 			_context = context;
 		}
-		public async Task SendMessage(string user, string message)
+		public async Task SendMessage(string senderEmail, string recipientEmail, string message)
 		{
-			if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(message))
+			if (string.IsNullOrEmpty(senderEmail) || string.IsNullOrEmpty(message))
 			{
 				Console.WriteLine("[ChatHub] One or both parameters are null or empty.");
 				return;
 			}
 
-			var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user);
-			if (dbUser == null)
+			var sender = await _context.Users.FirstOrDefaultAsync(u => u.Email == senderEmail);
+			var recipient = await _context.Users.FirstOrDefaultAsync(u => u.Email == recipientEmail);
+
+			if (sender == null || recipient == null)
 			{
-				Console.WriteLine($"[ChatHub] No user found in DB with username: {user}");
+				Console.WriteLine($"[ChatHub] Sender or recipient not found: {senderEmail}, {recipientEmail}");
 				return;
 			}
+
 
 			var newMessage = new Message
 			{
 				Id = Guid.NewGuid().ToString(),
-				UserId = dbUser.Id,
+				UserId = sender.Id,
+				RecipientId = recipient.Id,
 				Content = message,
 				CreatedAt = DateTime.UtcNow,
 				IsDeleted = false,
-				User = dbUser
 			};
 
 			_context.Messages.Add(newMessage);
 			await _context.SaveChangesAsync();
 
-			Console.WriteLine($"[ChatHub] Stored & sent message from '{user}': {message}");
-			await Clients.All.SendAsync("ReceiveMessage", user, message);
+			Console.WriteLine($"[ChatHub] Stored & sent message from '{senderEmail}': {recipientEmail}");
+			await Clients.All.SendAsync("ReceiveMessage", sender.DisplayName ?? sender.Email, message);
 		}
 
 		public override async Task OnConnectedAsync()
