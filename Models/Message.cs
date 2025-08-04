@@ -8,10 +8,8 @@ namespace ChatApp.Models
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public required string Id { get; set; }
-		[ForeignKey("Sender")]
 		public  required string UserId { get; set; }
 		public User Sender { get; set; } = null!;
-		[ForeignKey("Recipient")]
 		public required string RecipientId { get; set; }
 		public User Recipient { get; set; } = null!;
 		public string Content { get; set; } = string.Empty;

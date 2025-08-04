@@ -11,6 +11,7 @@ namespace ChatApp.Models
 		public required string Email { get; set; }
 		public string? DisplayName { get; set; }
 
-		public ICollection<Message> Messages { get; set; } = new List<Message>();
+		public ICollection<Message> SentMessages { get; set; } = new List<Message>();
+		public ICollection<Message> ReceivedMessages { get; set; } = new List<Message>();
 	}
 }

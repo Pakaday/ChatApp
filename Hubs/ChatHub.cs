@@ -25,10 +25,15 @@ namespace ChatApp.Hubs
 			var sender = await _context.Users.FirstOrDefaultAsync(u => u.Email == senderEmail);
 			var recipient = await _context.Users.FirstOrDefaultAsync(u => u.Email == recipientEmail);
 
-			if (sender == null || recipient == null)
+			if (sender == null)
 			{
-				Console.WriteLine($"[ChatHub] Sender or recipient not found: {senderEmail}, {recipientEmail}");
+				Console.WriteLine($"[ChatHub] Sender not found: {senderEmail}");
 				return;
+			}
+
+			if (recipient == null)
+			{
+				recipient = sender;
 			}
 
 
